@@ -45,15 +45,34 @@ public class Board_Path {
 		return bs;
 	}
 
+//	T=O(n) , S= O(n)!!
 	public static int num_Path_BU(int end) {
 		int[] dp = new int[end+6];
 		
 //		Initializing array
 		dp[end]=1;
 		
-//		Fill our array from some index to 0
+//		Fill our array from some index to 0 Tabulation!!
 		for(int i=end-1;i>=0;i--) {
 			dp[i]= dp[i+1]+dp[i+2]+dp[i+3]+dp[i+4]+dp[i+5]+dp[i+6];
+		}
+		return dp[0];
+	}
+//	S = O(n)
+	public static int num_Path_BUSE(int end) {
+		int[] dp = new int[6];
+		
+//		Initializing array
+		dp[0]=1;
+		
+//		Fill our array from some index to 0 Tabulation!!
+		for(int i=end-1;i>=0;i--) {
+			
+			int sum= dp[i+1]+dp[i+2]+dp[i+3]+dp[i+4]+dp[i+5]+dp[i+6];
+			for(int k=5;k>=1;k--) {
+				dp[k]=dp[k-1];
+			}
+			dp[0]=sum;
 		}
 		return dp[0];
 	}
