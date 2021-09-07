@@ -1,5 +1,6 @@
 package Lec_DP;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LIS {
@@ -38,10 +39,39 @@ public class LIS {
 				if (prev == -1 || nums[prev] < nums[idx]) {
 					sp1 = 1 + dp[idx + 1][idx + 1];
 				}
-				int sp2 = dp[idx + 1][prev+1];
+				int sp2 = dp[idx + 1][prev + 1];
 				dp[idx][prev + 1] = Math.max(sp1, sp2);
 			}
 		}
-		return dp[0][-1+1];
+		return dp[0][-1 + 1];
+	}
+
+	public int lengthOfLIS(int[] nums) {
+		ArrayList<Integer> AL = new ArrayList<>();
+		for (int i = 0; i < nums.length; i++) {
+			if (AL.isEmpty()) {
+				AL.add(nums[i]);
+				continue;
+			}
+//	             find a number smaller than nums[i] in my AL
+			boolean found = false;
+			for (int j = AL.size() - 1; j >= 0; j--) {
+				if (AL.get(j) < nums[i]) {
+					// that means!! simple update i+1
+					if (j == AL.size() - 1) {
+						AL.add(nums[i]);
+					} else {
+						AL.set(j + 1, nums[i]);
+					}
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				AL.set(0, nums[i]);
+			}
+			// System.out.println(AL);
+		}
+		return AL.size();
 	}
 }
